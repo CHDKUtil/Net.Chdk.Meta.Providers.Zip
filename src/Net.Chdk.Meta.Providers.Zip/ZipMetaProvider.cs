@@ -20,7 +20,16 @@ namespace Net.Chdk.Meta.Providers.Zip
             FileName = bootProvider.FileName;
         }
 
-        protected IEnumerable<T> GetItems(Stream stream, string name)
+        protected IEnumerable<T> GetItems(string path)
+        {
+            using (var stream = File.OpenRead(path))
+            {
+                var name = Path.GetFileName(path);
+                return GetItems(stream, name);
+            }
+        }
+
+        private IEnumerable<T> GetItems(Stream stream, string name)
         {
             using (var zip = new ZipFile(stream))
             {
