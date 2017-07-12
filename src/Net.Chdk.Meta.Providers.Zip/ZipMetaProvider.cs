@@ -1,5 +1,6 @@
 ﻿using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.Extensions.Logging;
+using Net.Chdk.Providers.Boot;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,17 +12,17 @@ namespace Net.Chdk.Meta.Providers.Zip
         where T : class
     {
         protected ILogger Logger { get; }
-        private IBootMetaProvider BootProvider { get; }
+        private IBootProvider BootProvider { get; }
 
-        protected ZipMetaProvider(IBootMetaProvider bootProvider, ILogger logger)
+        protected ZipMetaProvider(IBootProvider bootProvider, ILogger logger)
         {
             BootProvider = bootProvider;
             Logger = logger;
         }
 
-        protected IEnumerable<T> GetItems(string path, string productName)
+        protected IEnumerable<T> GetItems(string path, string categoryName)
         {
-            var bootFileName = BootProvider.GetFileName(productName);
+            var bootFileName = BootProvider.GetFileName(categoryName);
             using (var stream = File.OpenRead(path))
             {
                 var name = Path.GetFileName(path);
