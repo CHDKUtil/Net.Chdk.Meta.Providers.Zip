@@ -20,6 +20,8 @@ namespace Net.Chdk.Meta.Providers.Zip
             Logger = logger;
         }
 
+        public string Extension => ".zip";
+
         protected IEnumerable<T> GetItems(string path, string categoryName)
         {
             var bootFileName = BootProvider.GetFileName(categoryName);
